@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  Building2, BookOpen, Users, Camera, Play, CheckCircle2, 
+import {
+  Building2, BookOpen, Users, Camera, Play, CheckCircle2,
   XCircle, LogOut, ShieldAlert, Award, FileSpreadsheet, Plus, Trash2, Calendar
 } from 'lucide-react';
 
@@ -9,7 +9,7 @@ export default function App() {
   const [role, setRole] = useState(localStorage.getItem('role') || '');
   const [userName, setUserName] = useState(localStorage.getItem('userName') || '');
   const [activeTab, setActiveTab] = useState('');
-  
+
   // Login Form
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -93,7 +93,7 @@ export default function App() {
       if (role === 'admin' || role === 'lecturer') {
         const userRes = await fetch('/api/users', { headers: getHeaders() });
         if (userRes.ok) setUsers(await userRes.json());
-        
+
         const recordRes = await fetch('/api/attendance/records', { headers: getHeaders() });
         if (recordRes.ok) setRecords(await recordRes.json());
       } else if (role === 'student') {
@@ -139,7 +139,7 @@ export default function App() {
   };
 
   // --- CRUD ACTIONS ---
-  
+
   const handleAddDept = async (e) => {
     e.preventDefault();
     const res = await fetch('/api/departments', {
@@ -295,7 +295,7 @@ export default function App() {
           image_base64: dataUrl
         })
       });
-      
+
       const data = await res.json();
       if (res.ok) {
         setAttendanceResult({
@@ -347,31 +347,31 @@ export default function App() {
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', padding: '1rem' }}>
         <div className="glass-panel" style={{ width: '100%', maxWidth: '420px', padding: '2.5rem' }}>
           <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <h1 className="logo" style={{ justifyContent: 'center', fontSize: '2.2rem' }}>BioAttend</h1>
+            <h1 className="logo" style={{ justifyContent: 'center', fontSize: '2.2rem' }}>SAMS</h1>
             <p style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem', marginTop: '0.5rem' }}>
-              Hybrid Attendance Management & Biometrics
+              Smart Attendance Management System
             </p>
           </div>
 
           <form onSubmit={handleLoginSubmit}>
             <div className="form-group">
               <label className="form-label">Email Address</label>
-              <input 
-                type="email" 
-                className="form-input" 
-                required 
+              <input
+                type="email"
+                className="form-input"
+                required
                 placeholder="email@attendance.com"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
               />
             </div>
-            
+
             <div className="form-group">
               <label className="form-label">Password</label>
-              <input 
-                type="password" 
-                className="form-input" 
-                required 
+              <input
+                type="password"
+                className="form-input"
+                required
                 placeholder="••••••••"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
@@ -379,12 +379,12 @@ export default function App() {
             </div>
 
             {loginError && (
-              <div style={{ 
-                background: 'var(--color-error-bg)', 
-                color: 'var(--color-error)', 
-                padding: '0.75rem', 
-                borderRadius: 'var(--radius-sm)', 
-                fontSize: '0.85rem', 
+              <div style={{
+                background: 'var(--color-error-bg)',
+                color: 'var(--color-error)',
+                padding: '0.75rem',
+                borderRadius: 'var(--radius-sm)',
+                fontSize: '0.85rem',
                 marginBottom: '1rem',
                 display: 'flex',
                 alignItems: 'center',
@@ -408,7 +408,7 @@ export default function App() {
     <div className="app-container">
       {/* GLOBAL GLASS HEADER */}
       <header>
-        <div className="logo"><Award /> BioAttend</div>
+        <div className="logo"><Award /> SAMS</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <div className="user-badge">
             <span style={{ fontSize: '0.8rem', background: 'var(--color-primary-light)', padding: '0.2rem 0.5rem', borderRadius: '4px', textTransform: 'uppercase', fontWeight: 700 }}>
@@ -429,25 +429,25 @@ export default function App() {
           <aside className="sidebar">
             {role === 'admin' && (
               <>
-                <div 
+                <div
                   className={`sidebar-nav-item ${activeTab === 'departments' ? 'active' : ''}`}
                   onClick={() => setActiveTab('departments')}
                 >
                   <Building2 size={18} /> Departments
                 </div>
-                <div 
+                <div
                   className={`sidebar-nav-item ${activeTab === 'courses' ? 'active' : ''}`}
                   onClick={() => setActiveTab('courses')}
                 >
                   <BookOpen size={18} /> Courses
                 </div>
-                <div 
+                <div
                   className={`sidebar-nav-item ${activeTab === 'users' ? 'active' : ''}`}
                   onClick={() => setActiveTab('users')}
                 >
                   <Users size={18} /> Users & Biometrics
                 </div>
-                <div 
+                <div
                   className={`sidebar-nav-item ${activeTab === 'sessions' ? 'active' : ''}`}
                   onClick={() => setActiveTab('sessions')}
                 >
@@ -458,13 +458,13 @@ export default function App() {
 
             {role === 'lecturer' && (
               <>
-                <div 
+                <div
                   className={`sidebar-nav-item ${activeTab === 'sessions' ? 'active' : ''}`}
                   onClick={() => setActiveTab('sessions')}
                 >
                   <Play size={18} /> Active Sessions
                 </div>
-                <div 
+                <div
                   className={`sidebar-nav-item ${activeTab === 'logs' ? 'active' : ''}`}
                   onClick={() => setActiveTab('logs')}
                 >
@@ -475,13 +475,13 @@ export default function App() {
 
             {role === 'student' && (
               <>
-                <div 
+                <div
                   className={`sidebar-nav-item ${activeTab === 'attendance' ? 'active' : ''}`}
                   onClick={() => setActiveTab('attendance')}
                 >
                   <Camera size={18} /> Mark Attendance
                 </div>
-                <div 
+                <div
                   className={`sidebar-nav-item ${activeTab === 'history' ? 'active' : ''}`}
                   onClick={() => setActiveTab('history')}
                 >
@@ -493,7 +493,7 @@ export default function App() {
 
           {/* MAIN PANELS */}
           <section className="glass-panel" style={{ padding: '2rem' }}>
-            
+
             {/* ADMIN - DEPARTMENTS PANEL */}
             {activeTab === 'departments' && (
               <div>
@@ -633,13 +633,13 @@ export default function App() {
             {activeTab === 'sessions' && (
               <div>
                 <h2>Attendance Sessions</h2>
-                
+
                 {role === 'lecturer' && (
                   <div className="glass-panel" style={{ padding: '1.5rem', marginBottom: '2rem', display: 'flex', gap: '1rem', alignItems: 'flex-end', background: 'rgba(255,255,255,0.02)' }}>
                     <div style={{ flex: 1 }}>
                       <label className="form-label">Start Session for Course</label>
-                      <select 
-                        className="form-input" 
+                      <select
+                        className="form-input"
                         value={selectedCourseForSession}
                         onChange={e => setSelectedCourseForSession(e.target.value)}
                       >
@@ -756,7 +756,7 @@ export default function App() {
                       <div key={s.id} className="glass-panel" style={{ padding: '2rem', marginBottom: '1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <h3 style={{ color: 'var(--color-primary)' }}>{s.course_name}</h3>
                         <p style={{ color: 'var(--color-text-muted)', margin: '0.5rem 0 1.5rem 0' }}>Session ID: #{s.id}</p>
-                        
+
                         {!isCameraActive && !attendanceResult && (
                           <button className="btn btn-primary" onClick={startCamera}>
                             <Camera size={16} /> Open Web Camera
@@ -781,10 +781,10 @@ export default function App() {
                         )}
 
                         {attendanceResult && (
-                          <div style={{ 
-                            marginTop: '1rem', 
-                            padding: '1.5rem', 
-                            borderRadius: 'var(--radius-md)', 
+                          <div style={{
+                            marginTop: '1rem',
+                            padding: '1.5rem',
+                            borderRadius: 'var(--radius-md)',
                             background: attendanceResult.success ? 'var(--color-success-bg)' : 'var(--color-error-bg)',
                             border: `1px solid ${attendanceResult.success ? 'var(--color-success)' : 'var(--color-error)'}`,
                             maxWidth: '400px',
@@ -866,10 +866,10 @@ export default function App() {
             <form onSubmit={handleAddDept}>
               <div className="form-group">
                 <label className="form-label">Department Name</label>
-                <input 
-                  type="text" 
-                  className="form-input" 
-                  required 
+                <input
+                  type="text"
+                  className="form-input"
+                  required
                   placeholder="e.g. Electrical Engineering"
                   value={newDeptName}
                   onChange={e => setNewDeptName(e.target.value)}
@@ -892,10 +892,10 @@ export default function App() {
             <form onSubmit={handleAddCourse}>
               <div className="form-group">
                 <label className="form-label">Course Name</label>
-                <input 
-                  type="text" 
-                  className="form-input" 
-                  required 
+                <input
+                  type="text"
+                  className="form-input"
+                  required
                   placeholder="e.g. Neural Networks"
                   value={newCourseName}
                   onChange={e => setNewCourseName(e.target.value)}
@@ -903,9 +903,9 @@ export default function App() {
               </div>
               <div className="form-group">
                 <label className="form-label">Department</label>
-                <select 
-                  className="form-input" 
-                  required 
+                <select
+                  className="form-input"
+                  required
                   value={newCourseDept}
                   onChange={e => setNewCourseDept(e.target.value)}
                 >
@@ -917,8 +917,8 @@ export default function App() {
               </div>
               <div className="form-group">
                 <label className="form-label">Lecturer Assigned</label>
-                <select 
-                  className="form-input" 
+                <select
+                  className="form-input"
                   value={newCourseLecturer}
                   onChange={e => setNewCourseLecturer(e.target.value)}
                 >
@@ -945,10 +945,10 @@ export default function App() {
             <form onSubmit={handleAddUser}>
               <div className="form-group">
                 <label className="form-label">Full Name</label>
-                <input 
-                  type="text" 
-                  className="form-input" 
-                  required 
+                <input
+                  type="text"
+                  className="form-input"
+                  required
                   placeholder="John Doe"
                   value={newUserName}
                   onChange={e => setNewUserName(e.target.value)}
@@ -956,10 +956,10 @@ export default function App() {
               </div>
               <div className="form-group">
                 <label className="form-label">Email Address</label>
-                <input 
-                  type="email" 
-                  className="form-input" 
-                  required 
+                <input
+                  type="email"
+                  className="form-input"
+                  required
                   placeholder="john@school.edu"
                   value={newUserEmail}
                   onChange={e => setNewUserEmail(e.target.value)}
@@ -967,8 +967,8 @@ export default function App() {
               </div>
               <div className="form-group">
                 <label className="form-label">Role</label>
-                <select 
-                  className="form-input" 
+                <select
+                  className="form-input"
                   required
                   value={newUserRole}
                   onChange={e => setNewUserRole(e.target.value)}
@@ -980,8 +980,8 @@ export default function App() {
               </div>
               <div className="form-group">
                 <label className="form-label">Department</label>
-                <select 
-                  className="form-input" 
+                <select
+                  className="form-input"
                   required
                   value={newUserDept}
                   onChange={e => setNewUserDept(e.target.value)}
@@ -994,10 +994,10 @@ export default function App() {
               </div>
               <div className="form-group">
                 <label className="form-label">Password</label>
-                <input 
-                  type="password" 
-                  className="form-input" 
-                  required 
+                <input
+                  type="password"
+                  className="form-input"
+                  required
                   placeholder="••••••••"
                   value={newUserPassword}
                   onChange={e => setNewUserPassword(e.target.value)}
@@ -1020,7 +1020,7 @@ export default function App() {
             <p style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem', marginBottom: '1.5rem' }}>
               Ensure the student's face is centered inside the target ring and well lit.
             </p>
-            
+
             <div className="webcam-wrapper" style={{ marginBottom: '1.5rem' }}>
               <video ref={videoRef} autoPlay playsInline muted style={{ width: '100%', display: 'block' }}></video>
               <div className="webcam-overlay-ring"></div>
