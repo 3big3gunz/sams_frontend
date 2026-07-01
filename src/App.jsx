@@ -3,6 +3,18 @@ import {
   Building2, BookOpen, Users, Camera, Play, CheckCircle2,
   XCircle, LogOut, ShieldAlert, Award, FileSpreadsheet, Plus, Trash2, Calendar
 } from 'lucide-react';
+const API_BASE_URL = import.meta.env.PROD 
+  ? 'https://sams-backend-2z68.onrender.com' 
+  : '';
+
+// Automatically redirect all /api fetches to the production URL when in prod mode
+const originalFetch = window.fetch;
+window.fetch = (url, options) => {
+  const targetUrl = typeof url === 'string' && url.startsWith('/api') 
+    ? `${API_BASE_URL}${url}` 
+    : url;
+  return originalFetch(targetUrl, options);
+};
 
 export default function App() {
   const [token, setToken] = useState(localStorage.getItem('token') || '');
@@ -701,7 +713,7 @@ export default function App() {
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
                   <h2>Attendance Log Reports</h2>
-                  <a className="btn btn-primary" href="/api/attendance/export">
+                  <a className="btn btn-primary" href={`${API_BASE_URL}/api/attendance/export`}>
                     <FileSpreadsheet size={16} /> Export CSV
                   </a>
                 </div>
